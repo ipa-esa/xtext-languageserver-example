@@ -2,5 +2,17 @@ include 'org.xtext.example.mydsl'
 include 'org.xtext.example.mydsl.ide'
 include 'org.xtext.example.mydsl.websockets'
 include 'org.xtext.example.mydsl.tests'
-include 'vscode-extension'
-include 'vscode-extension-self-contained'
+// include 'vscode-extension'
+// include 'vscode-extension-self-contained'
+
+def rosPlugins = file('RosTooling/plugins')
+if (rosPlugins.exists() && rosPlugins.isDirectory()) {
+    rosPlugins.eachDir { dir ->
+        if (dir.name.startsWith('de.fraunhofer.ipa') && new File(dir, 'build.gradle').exists()) {
+            include ":${dir.name}"
+            project(":${dir.name}").projectDir = dir
+            // include "RosTooling:plugins:${dir.name}"
+            // project("RosTooling:plugins:${dir.name}").projectDir = dir
+        }
+    }
+}
