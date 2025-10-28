@@ -54,17 +54,42 @@
 //     return lc.stop();
 // }
 
+'use strict';
+
 import * as net from 'net';
+import { workspace, ExtensionContext } from 'vscode';
 import { LanguageClient, LanguageClientOptions, StreamInfo } from 'vscode-languageclient/node';
 
-function createServer(): Promise<StreamInfo> {
-  const socket = net.connect(5008, '127.0.0.1');
-  return Promise.resolve({ reader: socket, writer: socket });
+let lc: LanguageClient;
+
+export function activate(context: ExtensionContext) {
+    // Start the language server JAR externally (not from this extension).
+    // Connect to the running server via TCP socket.
+    const port = 5008; // Make sure this matches your ServerLauncher port
+
+    const serverOptions = () => {
+        const socket = net.connect(port, '127.0.0.1');
+        const result: StreamInfo = {
+            writer: socket,
+            reader: socket
+        };
+        return Promise.resolve(result);
+    };
+
+    const clientOptions: LanguageClientOptions = {
+        documentSelector: ['ros'],
+        synchronize: {
+            fileEvents: workspace.createFileSystemWatcher('**/*.*')
+        }
+    };
+
+    lc = new LanguageClient('Xtext Server', serverOptions, clientOptions);
+    context.subscriptions.push(lc);
+    lc.start();
 }
 
-const clientOptions: LanguageClientOptions = {
-  documentSelector: [{ scheme: 'file', language: 'ros' }]
-};
-
-const client = new LanguageClient('rosLS', 'ROS Language Server', createServer, clientOptions);
-client.start();
+export function deactivate() {
+    if (lc) {
+        return lc.stop();
+    }
+}

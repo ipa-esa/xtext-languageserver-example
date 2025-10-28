@@ -1,13 +1,46 @@
+// {
+//     "compilerOptions": {
+//         "target": "es6",
+//         "module": "commonjs",
+//         "moduleResolution": "node",
+//         "sourceMap": false,
+//         "inlineSources": false,
+//         "declaration": true,
+//         "stripInternal": true,
+//         "lib": [ "es6" ],
+//         "outDir": "../out"
+//     }
+// }
+
 {
     "compilerOptions": {
-        "target": "es6",
+        "strict": true,
+        "experimentalDecorators": true,
+        "noUnusedLocals": true,
+        "emitDecoratorMetadata": true,
+        "downlevelIteration": true,
         "module": "commonjs",
         "moduleResolution": "node",
+        "target": "es6",
+        "lib": [
+            "es6",
+            "dom"
+        ],
         "sourceMap": false,
         "inlineSources": false,
         "declaration": true,
         "stripInternal": true,
         "lib": [ "es6" ],
-        "outDir": "../out"
-    }
+        "rootDir": ".",
+        "outDir": "../out",
+        "skipLibCheck": true,
+        "checkJs": false
+    },
+    "include": [
+        "./**/*.ts",
+        "./**/*.tsx"
+    ],
+	"exclude": [
+		"node_modules"
+	]
 }

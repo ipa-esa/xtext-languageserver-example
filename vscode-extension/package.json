@@ -26,40 +26,23 @@
     "contributes": {
         "languages": [
             {
-                "id": "mydsl",
+                "id": "ros",
                 "aliases": [
-                    "mydsl"
+                    "ROS", "ros"
                 ],
                 "extensions": [
-                    ".mydsl"
+                    ".ros"
                 ],
-                "configuration": "./mydsl.configuration.json"
-            }
-        ],
-        "grammars": [
-            {
-                "language": "mydsl",
-                "scopeName": "text.mydsl",
-                "path": "./syntaxes/mydsl.tmLanguage.json"
-            }
-        ],
-        "commands": [
-            {
-                "command": "mydsl.a.proxy",
-                "title": "MyDsl Command A"
-            },
-            {
-                "command": "mydsl.b",
-                "title": "MyDsl Command B"
+                "configuration": "./ros.configuration.json"
             }
         ]
     },
     "devDependencies": {
-        "@types/node": "^20.19.21",
+        "@types/node": "^20.19.23",
         "@types/vscode": "^1.103.0",
-        "typescript": "^5.9.3",
         "@vscode/test-electron": "^2.5.2",
-        "@vscode/vsce": "^3.6.2"
+        "@vscode/vsce": "^3.6.2",
+        "typescript": "^5.9.3"
     },
     "dependencies": {
         "vscode-languageclient": "^9.0.1"
